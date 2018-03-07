@@ -1,0 +1,13 @@
+1520465133576	geckodriver	INFO	geckodriver 0.19.1
+1520465133602	geckodriver	INFO	Listening on 127.0.0.1:51345
+1520465136733	mozrunner::runner	INFO	Running command: "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\lxw-v\\AppData\\Local\\Temp\\rust_mozprofile.lZ8fYdpDBsso"
+Unable to read VR Path Registry from C:\Users\lxw-v\AppData\Local\openvr\openvrpaths.vrpath
+1520465138880	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\lxw-v\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\lxw-v\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\lxw-v\AppData\Local\openvr\openvrpaths.vrpath
+1520465141850	Marionette	INFO	Listening on port 51353
+Unable to read VR Path Registry from C:\Users\lxw-v\AppData\Local\openvr\openvrpaths.vrpath
+1520465142337	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.mlbstatic.com/mlb.com/builds/site-core/52f9b8565cbfb77a553ebe8075945729d3a1bcd3_1520020797/scripts/site-core.js, line 22: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://www.mlbstatic.com/mlb.com/builds/site-core/52f9b8565cbfb77a553ebe8075945729d3a1bcd3_1520020797/scripts/site-core.js, line 22: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
