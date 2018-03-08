@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# In[1]:
+# In[12]:
 
 
 from selenium import webdriver
@@ -15,10 +15,10 @@ from selenium.webdriver.common.keys import Keys
 import random
 import time
 
-# In[2]:
+# In[13]:
 
 
-driver = webdriver.Firefox(executable_path=r"geckodriver.exe")
+driver = webdriver.Firefox(executable_path=r"E:\geckodriver-v0.19.1-win64\geckodriver.exe")
 driver.get('http://www.mlb.com')
 wait = WebDriverWait(driver, 10)
 stats_header_bar = wait.until(
@@ -27,28 +27,28 @@ normal_delay = random.normalvariate(2, 0.5)
 time.sleep(normal_delay)
 ActionChains(driver).move_to_element(stats_header_bar).perform()
 
-# In[3]:
+# In[14]:
 
 
-time.sleep(15)
+time.sleep(20)
 stats_header_bar.click()
 # stats_line_items = stats_header_bar.find_elements_by_tag_name('li')
 # [li.text for li in stats_line_items]
 
 
-# In[4]:
+# In[15]:
 
 
 time.sleep(5)
 hitting_season_element = driver.find_element_by_id('sp_hitting_season')
 season_select = Select(hitting_season_element)
 
-# In[5]:
+# In[16]:
 
 
 season_select.select_by_value('2015')
 
-# In[6]:
+# In[17]:
 
 
 time.sleep(5)
@@ -56,21 +56,21 @@ hitting_game_element = driver.find_element_by_id('sp_hitting_game_type')
 game_select = Select(hitting_game_element)
 game_select.select_by_visible_text('Regular Season')
 
-# In[7]:
+# In[18]:
 
 
 time.sleep(5)
 team_bar = driver.find_element_by_id('st_parent')
 team_bar.click()
 
-# In[8]:
+# In[19]:
 
 
 import pandas as pd
 import requests
 import bs4
 
-# In[9]:
+# In[20]:
 
 
 time.sleep(5)
@@ -80,7 +80,7 @@ soup = bs4.BeautifulSoup(data_html, "html5lib")
 head = [t.text.replace("▼", "") for t in soup.thead.find_all("th")]
 df_home_run = pd.DataFrame(columns=head)
 
-# In[10]:
+# In[21]:
 
 
 context_table_q1 = []
@@ -88,7 +88,7 @@ for t in soup.tbody.find_all("tr"):
     for a in t.find_all("td"):
         context_table_q1.append(a.text)
 
-# In[11]:
+# In[22]:
 
 
 context_table_q1_prettify = []
@@ -96,7 +96,7 @@ for i in range(int(len(context_table_q1) / len(head))):
     s = context_table_q1[i * len(head): (i + 1) * len(head)]
     context_table_q1_prettify.append(s)
 
-# In[12]:
+# In[23]:
 
 
 context_table_q1_prettify
@@ -105,32 +105,32 @@ for i in range(30):
 
 df_home_run.drop("", axis=1)
 
-# In[13]:
+# In[24]:
 
 
 df_home_run.drop("", axis=1).to_csv('Question_1.csv')
 
-# In[14]:
+# In[25]:
 
 
 df_home_run.sort_values(by=['HR'], ascending=False)
 # df_home_run.sort_values(by = ['HR'])
 
 
-# In[15]:
+# In[29]:
 
 
 max_hr_team_name = df_home_run.iloc[1, 1]
-max_hr_team_name
+print("Q1: answer: " + max_hr_team_name)
 
-# In[16]:
+# In[30]:
 
 
 AL_bar = driver.find_element_by_css_selector(
     '#st_hitting-0 > fieldset:nth-child(2) > label:nth-child(4) > span:nth-child(1)')
 AL_bar.click()
 
-# In[17]:
+# In[31]:
 
 
 time.sleep(5)
@@ -140,7 +140,7 @@ soup_AL = bs4.BeautifulSoup(data_html_AL, "html5lib")
 head_AL = [t.text.replace("▼", "") for t in soup_AL.thead.find_all("th")]
 df_home_run_AL = pd.DataFrame(columns=head_AL)
 
-# In[18]:
+# In[32]:
 
 
 context_table_q2_a_AL = []
@@ -159,7 +159,7 @@ for i in range(15):
 
 df_home_run_AL.drop("", axis=1).to_csv('Question_2_a_AL.csv')
 
-# In[19]:
+# In[33]:
 
 
 time.sleep(10)
@@ -167,7 +167,7 @@ NL_bar = driver.find_element_by_css_selector(
     '#st_hitting-0 > fieldset:nth-child(2) > label:nth-child(6) > span:nth-child(1)')
 NL_bar.click()
 
-# In[20]:
+# In[34]:
 
 
 time.sleep(5)
@@ -192,7 +192,7 @@ for i in range(15):
 
 df_home_run_NL.drop("", axis=1).to_csv('Question_2_a_NL.csv')
 
-# In[21]:
+# In[35]:
 
 
 time.sleep(10)
@@ -207,14 +207,15 @@ if AL_mean_q2_a >= NL_mean_q2_a:
 else:
     print("Nation League average home run : ", NL_mean_q2_a)
 
-# In[22]:
+# In[37]:
 
 
+time.sleep(5)
 AL_bar = driver.find_element_by_css_selector(
     '#st_hitting-0 > fieldset:nth-child(2) > label:nth-child(4) > span:nth-child(1)')
 AL_bar.click()
 
-# In[23]:
+# In[38]:
 
 
 time.sleep(5)
@@ -222,7 +223,7 @@ hitting_splits_element = driver.find_element_by_id('st_hitting_hitting_splits')
 splits_select = Select(hitting_splits_element)
 splits_select.select_by_visible_text('First Inning')
 
-# In[24]:
+# In[39]:
 
 
 time.sleep(5)
@@ -248,7 +249,7 @@ for i in range(15):
 
 df_home_run_AL_b.drop("", axis=1).to_csv('Question_2_b_AL.csv')
 
-# In[25]:
+# In[40]:
 
 
 NL_bar = driver.find_element_by_css_selector(
@@ -259,7 +260,7 @@ hitting_splits_element = driver.find_element_by_id('st_hitting_hitting_splits')
 splits_select = Select(hitting_splits_element)
 splits_select.select_by_visible_text('First Inning')
 
-# In[26]:
+# In[41]:
 
 
 data_div_NL = driver.find_element_by_id('datagrid')
@@ -283,7 +284,7 @@ for i in range(15):
 
 df_home_run_NL_b.drop("", axis=1).to_csv('Question_2_b_NL.csv')
 
-# In[27]:
+# In[42]:
 
 
 time.sleep(10)
@@ -297,18 +298,19 @@ if AL_mean_q2_b >= NL_mean_q2_b:
 else:
     print("Nation League average home run first inning : ", NL_mean_q2_b)
 
-# In[28]:
+# In[43]:
 
 
 game_select.select_by_visible_text('Regular Season')
 
-# In[29]:
+# In[44]:
 
 
+time.sleep(5)
 splits_select.select_by_visible_text('Select Split')
 time.sleep(5)
 
-# In[30]:
+# In[45]:
 
 
 hitting_season_element = driver.find_element_by_id('st_hitting_season')
@@ -316,17 +318,17 @@ season_select = Select(hitting_season_element)
 season_select.select_by_value('2017')
 time.sleep(5)
 
-# In[31]:
+# In[46]:
 
 
 Player_bar = driver.find_element_by_id('sp_parent')
 
-# In[32]:
+# In[47]:
 
 
 Player_bar.click()
 
-# In[33]:
+# In[48]:
 
 
 time.sleep(5)
@@ -340,7 +342,7 @@ team_select = Select(team_name_element)
 time.sleep(5)
 team_select.select_by_visible_text('New York Yankees')
 
-# In[34]:
+# In[49]:
 
 
 time.sleep(5)
@@ -373,7 +375,7 @@ df_NYY = df_NYY.drop("", axis=1)
 
 df_NYY.to_csv('Question_3.csv')
 
-# In[35]:
+# In[50]:
 
 
 NYY_player_data = pd.read_csv('Question_3.csv')
@@ -383,7 +385,7 @@ NYY_player_data = pd.read_csv('Question_3.csv')
 #         players_over30.append(lines)
 NYY_player_data
 
-# In[36]:
+# In[51]:
 
 
 max = 0.0
@@ -394,12 +396,12 @@ for i in range(44):
             max_AB_player_pos = NYY_player_data.loc[i]['Pos']
             max = float(NYY_player_data.loc[i]['AVG'])
 
-# In[37]:
+# In[52]:
 
 
 player_name = max_AB_player.split(',')[0][1:]
 
-# In[38]:
+# In[53]:
 
 
 time.sleep(10)
@@ -416,7 +418,7 @@ search_results = active_player_search_div.find_elements_by_tag_name('li')
 time.sleep(5)
 ActionChains(driver).move_to_element(search_results[0]).click().perform()
 
-# In[39]:
+# In[54]:
 
 
 time.sleep(5)
@@ -424,17 +426,17 @@ full_name_bar = driver.find_element_by_class_name('full-name')
 print('Full name of best overall batting average in the 2017 regular season is : ', full_name_bar.text, ', Pos: ',
       max_AB_player_pos)
 
-# In[40]:
+# In[55]:
 
 
 driver.back()
 
-# In[41]:
+# In[56]:
 
 
 NYY_player_data
 
-# In[42]:
+# In[57]:
 
 
 max_outfield = 0.0
@@ -452,13 +454,13 @@ for i in range(44):
 
 print(max_AB_player_outfield)
 
-# In[43]:
+# In[58]:
 
 
 max_AB_player_name = max_AB_player_outfield.split(',')[0][1:]
 max_AB_player_name
 
-# In[44]:
+# In[59]:
 
 
 active_player_search_div = driver.find_element_by_id('active-player-search')
@@ -478,12 +480,12 @@ full_name_bar = driver.find_element_by_class_name('full-name')
 print('Full name of best overall batting average in the 2017 regular season played outfield  is : ', full_name_bar.text,
       ', Pos: ', max_AB_player_pos_outfield)
 
-# In[45]:
+# In[60]:
 
 
 driver.back()
 
-# In[46]:
+# In[61]:
 
 
 time.sleep(10)
@@ -492,7 +494,7 @@ AL_bar = driver.find_element_by_css_selector(
     '#sp_hitting-1 > fieldset:nth-child(1) > label:nth-child(4) > span:nth-child(1)')
 AL_bar.click()
 
-# In[47]:
+# In[62]:
 
 
 time.sleep(5)
@@ -500,7 +502,7 @@ team_name_element = driver.find_element_by_id('sp_hitting_team_id')
 team_select = Select(team_name_element)
 team_select.select_by_visible_text('All Teams')
 
-# In[48]:
+# In[63]:
 
 
 time.sleep(5)
@@ -508,7 +510,7 @@ hitting_season_element = driver.find_element_by_id('sp_hitting_season')
 season_select = Select(hitting_season_element)
 season_select.select_by_value('2015')
 
-# In[49]:
+# In[64]:
 
 
 time.sleep(10)
@@ -534,7 +536,7 @@ for i in range(int(len(data_all) / len(head_all))):
 for j in range(50):
     df_all.loc[j] = data_all_format[j]
 
-# In[50]:
+# In[65]:
 
 
 for x in range(11):
@@ -563,41 +565,41 @@ for x in range(11):
         for j in range(50):
             df_all.loc[(x + 1) * 50 + j] = data_all_format[j]
 
-# In[51]:
+# In[66]:
 
 
 df_all = df_all.drop("▲", axis=1)
 df_all = df_all.drop("", axis=1)
 
-# In[52]:
+# In[67]:
 
 
 df_all
 
-# In[53]:
+# In[68]:
 
 
 time.sleep(5)
 df_all.to_csv('Question_4.csv')
 all_player_data = pd.read_csv('Question_4.csv')
 
-# In[54]:
+# In[69]:
 
 
 all_player_data = all_player_data.sort_values(by=['AB'], ascending=False)
 
-# In[55]:
+# In[70]:
 
 
 all_player_data = all_player_data.drop('Unnamed: 0', axis=1)
 
-# In[56]:
+# In[71]:
 
 
 maxAB_all_player_name = all_player_data.iloc[0, 1:2][0].split(',')[0][1:]
 maxAB_all_player_name
 
-# In[57]:
+# In[72]:
 
 
 maxAB_all_player_team_name = all_player_data.iloc[0, 2:3][0]
@@ -605,7 +607,7 @@ if maxAB_all_player_team_name == 'HOU':
     maxAB_all_player_team_name = 'Houston'
 maxAB_all_player_pos = all_player_data.iloc[0, 3:4][0]
 
-# In[58]:
+# In[73]:
 
 
 js = "var q=document.documentElement.scrollTop=0"
@@ -629,12 +631,12 @@ time.sleep(5)
 print('Full name of the player in the American League had the most at bats in the 2015 regular season is : ',
       full_name_bar.text, ", team name is : ", maxAB_all_player_team_name, ", Pos : ", maxAB_all_player_pos)
 
-# In[59]:
+# In[74]:
 
 
 driver.back()
 
-# In[60]:
+# In[75]:
 
 
 time.sleep(8)
@@ -642,7 +644,7 @@ hitting_season_element = driver.find_element_by_id('sp_hitting_season')
 season_select = Select(hitting_season_element)
 season_select.select_by_value('2014')
 
-# In[61]:
+# In[76]:
 
 
 time.sleep(8)
@@ -650,7 +652,7 @@ hitting_game_element = driver.find_element_by_id('sp_hitting_game_type')
 game_select = Select(hitting_game_element)
 game_select.select_by_visible_text('All-Star Game')
 
-# In[62]:
+# In[77]:
 
 
 time.sleep(8)
@@ -658,7 +660,7 @@ MLB_bar = driver.find_element_by_css_selector(
     '#sp_hitting-1 > fieldset:nth-child(1) > label:nth-child(2) > span:nth-child(1)')
 MLB_bar.click()
 
-# In[63]:
+# In[78]:
 
 
 time.sleep(8)
@@ -686,24 +688,24 @@ for j in range(41):
 
 df_all_star
 
-# In[64]:
+# In[79]:
 
 
 df_all_star = df_all_star.drop("▲", axis=1)
 df_all_star = df_all_star.drop("", axis=1)
 
-# In[65]:
+# In[80]:
 
 
 df_all_star.to_csv('Question_5.csv')
 
-# In[66]:
+# In[81]:
 
 
 latin_coun = '''Argentina;Bolivia;Brazil;Chile;Colombia;Costa Rica;Cuba;Dominican Republic;Ecuador;El Salvador;French Guiana;Guadeloupe;Guatemala;Haiti;Honduras;Martinique;Mexico;Nicaragua;Panama;Paraguay;Peru;Puerto Rico;Saint Barthélemy;Saint Martin;Uruguay;Venezuela'''
 latin_list = latin_coun.split(';')
 
-# In[67]:
+# In[82]:
 
 
 name_list = []
@@ -725,7 +727,7 @@ for name in soup_all_star.tbody.find_all('a'):
 
 name_list
 
-# In[68]:
+# In[83]:
 
 
 data_q5 = []
@@ -758,7 +760,7 @@ for name in name_list:
         time.sleep(5)
         driver.back()
 
-# In[69]:
+# In[84]:
 
 
 time.sleep(3)
@@ -766,46 +768,48 @@ js = "var q=document.documentElement.scrollTop=0"
 driver.execute_script(js)
 time.sleep(3)
 
-# In[70]:
+# In[85]:
 
 
 data_q5
 
-# In[71]:
+# In[86]:
 
 
 head_q5 = ['Player', 'Team']
 df_q5 = pd.DataFrame(columns=head_q5)
 
-# In[72]:
+# In[89]:
 
 
 data_q5_format = []
 for i in range(int(len(data_q5) / len(head_q5))):
     data_q5_format.append(data_q5[i * len(head_q5): (i + 1) * len(head_q5)])
-
+print("Q5 answer : \n")
 for j in range(16):
     df_q5.loc[j] = data_q5_format[j]
-
+    print("Player name : " + data_q5_format[j][0])
+    print("Team name : " + data_q5_format[j][1])
 df_q5
 
-# In[73]:
+# In[90]:
 
 
 df_q5.to_csv('Question_5_answer.csv')
+print()
 
-# In[74]:
+# In[91]:
 
 
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
-# In[75]:
+# In[92]:
 
 
 import json
 
 
-# In[76]:
+# In[93]:
 
 
 def api(html):
@@ -821,7 +825,7 @@ def api(html):
     return data
 
 
-# In[77]:
+# In[94]:
 
 
 data_stats_stadium = api("/v3/mlb/stats/json/Stadiums")
@@ -829,7 +833,7 @@ time.sleep(5)
 data_stats_stadium = json.loads(data_stats_stadium)
 data_stats_stadium
 
-# In[78]:
+# In[95]:
 
 
 match_info = []
@@ -838,13 +842,13 @@ for i in data_stats_stadium:
 
 match_info
 
-# In[79]:
+# In[96]:
 
 
 data_stats_game = json.loads(api("/v3/mlb/stats/json/Games/2016"))
 data_stats_game
 
-# In[80]:
+# In[97]:
 
 
 time.sleep(5)
@@ -852,9 +856,7 @@ game_info = []
 for i in data_stats_game:
     game_info.append([i["HomeTeam"], i["AwayTeam"], i["DateTime"][0:10], i["StadiumID"]])
 
-game_info
-
-# In[81]:
+# In[98]:
 
 
 general_info = []
@@ -867,7 +869,7 @@ for i in match_info:
 
 general_info
 
-# In[82]:
+# In[99]:
 
 
 data_q6 = []
@@ -878,7 +880,7 @@ for a in general_info:
 
 data_q6
 
-# In[84]:
+# In[100]:
 
 
 time.sleep(5)
@@ -889,13 +891,33 @@ for i in range(len(data_q6)):
 
 df_q6
 
-# In[85]:
+# In[101]:
 
 
 df_q6.to_csv('Question_6.csv')
 
-# In[86]:
+# In[102]:
 
 
 df_q6.to_json('Question_6_Games_Stadiums.json')
+
+# In[104]:
+
+
+# <opponent Team Name> <game date> <stadium name> <city>, <state>
+print("Q6 answer : \n")
+for i in range(len(data_q6)):
+    if data_q6[i][0] == 'HOU':
+        print("Opponent Team Name : " + data_q6[i][1])
+        print("Game Date : " + data_q6[i][2])
+        print("Stadium Name : " + data_q6[i][3])
+        print("City : " + data_q6[i][4])
+        print("State : " + data_q6[i][5] + "\n")
+    else:
+        print("Opponent Team Name : " + data_q6[i][0])
+        print("Game Date : " + data_q6[i][2])
+        print("Stadium Name : " + data_q6[i][3])
+        print("City : " + data_q6[i][4])
+        print("State : " + data_q6[i][5] + "\n")
+
 
